@@ -20,7 +20,10 @@ func (r *Router) RegisterAPIRoutes() *Router {
 
 	drones := engine.Group("/drones")
 	{
-		drones.POST("/register", r.inject(requests.InjectableRegisterDroneRequest), r.DronesHandler.Register)
+		drones.POST("/register", r.inject(&requests.RegisterDrone{}), r.DronesHandler.Register)
+		drones.POST("/load", r.inject(&requests.LoadMedications{}), r.DronesHandler.LoadMedications)
+		drones.PUT("/update-status", r.inject(&requests.UpdateDroneStatus{}), r.DronesHandler.UpdateStatus)
+		drones.GET("/:serialNumber/battery", r.DronesHandler.GetBatteryCapacity)
 	}
 
 	return r

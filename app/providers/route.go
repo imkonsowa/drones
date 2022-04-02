@@ -19,9 +19,10 @@ func NewRouteProvider(a *app.App) *RouteProvider {
 
 func (r *RouteProvider) Boot() error {
 	dronesAdapter := adapters.NewDronesAdapter(r.App.DB)
+	medicationsAdapter := adapters.NewMedicationsAdapter(r.App.DB)
 
 	pingHandler := handlers.NewPingHandler()
-	dronesHandler := handlers.NewDronesHandler(dronesAdapter)
+	dronesHandler := handlers.NewDronesHandler(dronesAdapter, medicationsAdapter)
 
 	rtr := &router.Router{
 		App: r.App,

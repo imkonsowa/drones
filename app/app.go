@@ -39,7 +39,7 @@ func NewApp() *App {
 	if dbErr != nil {
 		panic(fmt.Sprintf("failed to connect to DB; %s", err))
 	}
-	migrateErr := db.AutoMigrate(&models.Drone{})
+	migrateErr := db.AutoMigrate(&models.Drone{}, &models.Medication{})
 	if migrateErr != nil {
 		panic(fmt.Sprintf("failed to migrate; %s", err))
 	}

@@ -10,8 +10,8 @@ type DronesAdapter struct {
 	DB *gorm.DB
 }
 
-func NewDronesAdapter(db *gorm.DB) DronesAdapter {
-	return DronesAdapter{db}
+func NewDronesAdapter(db *gorm.DB) *DronesAdapter {
+	return &DronesAdapter{db}
 }
 
 func (d *DronesAdapter) Create(drone *models.Drone) *models.Drone {
@@ -32,4 +32,22 @@ func (d *DronesAdapter) GetBySerialNumber(serial string) (*models.Drone, error) 
 	}
 
 	return &drone, nil
+}
+
+func (d *DronesAdapter) UpdateStatus(serial string, status models.DroneStatus) error {
+	if len(status) == 0 || len(status) == 0 {
+		return errors.New("invalid params values")
+	}
+
+	err := d.DB.
+		Where("serial_number = ?", serial).
+		Updates(&models.Drone{
+			Status: status,
+		}).Error
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
