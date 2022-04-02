@@ -2,6 +2,7 @@ package providers
 
 import (
 	"drones/app"
+	"drones/app/data/adapters"
 	"drones/app/http/handlers"
 	"drones/app/http/router"
 )
@@ -17,8 +18,10 @@ func NewRouteProvider(a *app.App) *RouteProvider {
 }
 
 func (r *RouteProvider) Boot() error {
+	dronesAdapter := adapters.NewDronesAdapter(r.App.DB)
+
 	pingHandler := handlers.NewPingHandler()
-	dronesHandler := handlers.NewDronesHandler()
+	dronesHandler := handlers.NewDronesHandler(dronesAdapter)
 
 	rtr := &router.Router{
 		App: r.App,

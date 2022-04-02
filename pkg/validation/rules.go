@@ -6,8 +6,9 @@ import (
 )
 
 var validationMessages = map[string]string{
-	"lte":   "exceeded the limit, max: :lte",
-	"oneof": "not allowed value, one of: :oneof",
+	"uniqueDB": "already registered",
+	"lte":      "exceeded the limit, max: :lte",
+	"oneof":    "not allowed value, one of: :oneof",
 }
 
 func GetRuleMessage(rule string, params map[string]string) string {

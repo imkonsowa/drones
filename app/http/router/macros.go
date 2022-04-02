@@ -26,7 +26,7 @@ func (r *Router) inject(constructor requests.RequestConstructor) gin.HandlerFunc
 			return
 		}
 
-		validate := validation.GetValidator()
+		validate := validation.GetValidator(r.App.DB)
 		err := validate.Validator.Struct(request)
 		if err != nil {
 			errors := map[string]string{}
