@@ -1,4 +1,4 @@
-package handlers
+package requests
 
 type DroneModel string
 
@@ -19,17 +19,10 @@ const (
 	Delivered  DroneState = "RETURNING"
 )
 
-type Drone struct {
+type RegisterDrone struct {
 	SerialNumber    string     `json:"serial_number"`
 	Model           DroneModel `json:"model"`
 	WeightLimit     int        `json:"weight_limit"`
 	BatteryCapacity int        `json:"battery_capacity"`
 	State           DroneState `json:"state"`
-}
-
-type Medication struct {
-	Name     string
-	Weight   int
-	Code     string
-	ImageURL string
 }
