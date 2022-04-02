@@ -16,20 +16,21 @@ type App struct {
 
 func NewApp() *App {
 	config.Construct()
+	cfg := config.GetConfig()
 
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatalf("Failed to load env vars. Err: %s", err)
+		log.Fatalf("failed to load env vars. Err: %s", err)
 	}
 
 	engine := gin.Default()
 	engine.Use(middlewares.JsonResponseHeader)
 
-	engine.SetTrustedProxies([]string{})
+	_ = engine.SetTrustedProxies([]string{})
 
 	return &App{
 		Engine: engine,
-		Config: config.GetConfig(),
+		Config: cfg,
 	}
 }
 

@@ -14,19 +14,8 @@ func NewDronesHandler() *DronesHandler {
 }
 
 func (d *DronesHandler) Register(context *gin.Context) {
-	var request requests.RegisterDrone
-
-	bindErr := context.Bind(&request)
-	if bindErr != nil {
-		context.JSON(http.StatusBadRequest, gin.H{
-			"success": false,
-			"code":    http.StatusBadRequest,
-			"message": "Failed to parse your request",
-		})
-		return
-	}
-
-	// TODO: add validation
+	ctxKey, _ := context.Get("request")
+	request := ctxKey.(*requests.RegisterDrone)
 
 	// TODO: register the drone to the DB
 

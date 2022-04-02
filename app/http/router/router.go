@@ -3,6 +3,7 @@ package router
 import (
 	"drones/app"
 	"drones/app/http/handlers"
+	"drones/app/http/requests"
 )
 
 type Router struct {
@@ -19,7 +20,7 @@ func (r *Router) RegisterAPIRoutes() *Router {
 
 	drones := engine.Group("/drones")
 	{
-		drones.POST("/register", r.DronesHandler.Register)
+		drones.POST("/register", r.inject(requests.InjectableRegisterDroneRequest), r.DronesHandler.Register)
 	}
 
 	return r
