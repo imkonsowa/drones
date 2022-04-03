@@ -14,6 +14,14 @@ func NewDronesAdapter(db *gorm.DB) *DronesAdapter {
 	return &DronesAdapter{db}
 }
 
+func (d *DronesAdapter) DronesList() []models.Drone {
+	var drones []models.Drone
+
+	d.DB.Table("drones").Find(&drones)
+
+	return drones
+}
+
 func (d *DronesAdapter) Create(drone *models.Drone) *models.Drone {
 	d.DB.Create(&drone)
 	return drone
