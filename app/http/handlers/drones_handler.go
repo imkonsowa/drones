@@ -30,8 +30,8 @@ func (d *DronesHandler) Register(context *gin.Context) {
 		Model:           request.Model,
 		SerialNumber:    request.SerialNumber,
 		WeightLimit:     request.WeightLimit,
-		Status:          request.Status,
 		BatteryCapacity: request.BatteryCapacity,
+		Status:          models.Idle,
 	}
 
 	drone = d.DronesAdapter.Create(drone)
