@@ -209,3 +209,22 @@ func (d *DronesHandler) GetBatteryCapacity(context *gin.Context) {
 		}).
 		Send()
 }
+
+func (d *DronesHandler) GetIdleDrones(context *gin.Context) {
+	drones, dronesError := d.DronesAdapter.GetDronesByStatus(models.Idle)
+	if dronesError != nil {
+		responses.NewContextResponse(context).
+			Error().
+			Code(http.StatusInternalServerError).
+			Send()
+		return
+	}
+
+	responses.NewContextResponse(context).
+		Success().
+		Code(http.StatusOK).
+		Data(map[string]interface{}{
+			"drones": drones,
+		}).
+		Send()
+}

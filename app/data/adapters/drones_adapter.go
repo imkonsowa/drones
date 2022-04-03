@@ -51,3 +51,18 @@ func (d *DronesAdapter) UpdateStatus(serial string, status models.DroneStatus) e
 
 	return nil
 }
+
+func (d *DronesAdapter) GetDronesByStatus(status models.DroneStatus) ([]models.Drone, error) {
+	if len(status) == 0 {
+		return nil, errors.New("invalid params values")
+	}
+
+	var drones []models.Drone
+
+	err := d.DB.Where("status = ?", status).Find(&drones).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, nil
+	}
+
+	return drones, nil
+}
