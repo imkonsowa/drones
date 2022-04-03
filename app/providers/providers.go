@@ -7,5 +7,8 @@ type Provider interface {
 }
 
 func Ignite(a *app.App) {
-	NewRouteProvider(a).Boot()
+	err := NewRouteProvider(a).Boot()
+	if err != nil {
+		panic("failed to ignite providers")
+	}
 }
