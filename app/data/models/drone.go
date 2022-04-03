@@ -40,7 +40,7 @@ type Drone struct {
 	Model           DroneModel  `json:"model"`
 	WeightLimit     int         `json:"weight_limit"`
 	BatteryCapacity int         `json:"battery_capacity"`
-	Status          DroneStatus `json:"state"`
+	Status          DroneStatus `json:"status"`
 }
 
 func (*Drone) TableName() string {
