@@ -92,6 +92,15 @@ func (d *DronesHandler) LoadMedications(context *gin.Context) {
 		return
 	}
 
+	updateErr := d.DronesAdapter.UpdateStatus(request.SerialNumber, models.Loading)
+	if updateErr != nil {
+		responses.NewContextResponse(context).
+			Error().
+			Code(http.StatusInternalServerError).
+			Message("failed to update drone status to LOADING").
+			Send()
+	}
+
 	medications, err := d.MedicationsAdapter.BatchCreate(medications)
 	if err != nil {
 		responses.NewContextResponse(context).
@@ -101,6 +110,39 @@ func (d *DronesHandler) LoadMedications(context *gin.Context) {
 			Send()
 		return
 	}
+
+	// check if drone is fully loaded
+	go func() {
+		loadedMedications, _ = d.MedicationsAdapter.GetDroneMedications(drone.SerialNumber)
+		if loadedMedicationsErr != nil {
+			log.Fatalf("failed to fetch loaded medications")
+			return
+		}
+
+		loadedMedicationsWeights = 0
+		for _, medication := range loadedMedications {
+			loadedMedicationsWeights += medication.Weight
+		}
+		if loadedMedicationsWeights >= drone.WeightLimit {
+			// Update to LOADED if loaded items reached weight limit
+			updateErr = d.DronesAdapter.UpdateStatus(request.SerialNumber, models.Loaded)
+			if updateErr != nil {
+				responses.NewContextResponse(context).
+					Error().
+					Code(http.StatusInternalServerError).
+					Message("failed to update drone status to LOADED").
+					Send()
+			} else {
+				// update to IDLE if still eligible for loading items
+				updateErr = d.DronesAdapter.UpdateStatus(request.SerialNumber, models.Idle)
+				responses.NewContextResponse(context).
+					Error().
+					Code(http.StatusInternalServerError).
+					Message("failed to update drone status to LOADED").
+					Send()
+			}
+		}
+	}()
 
 	responses.NewContextResponse(context).
 		Success().
