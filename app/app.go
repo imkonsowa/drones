@@ -6,10 +6,8 @@ import (
 	"drones/pkg/config"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"log"
 )
 
 type App struct {
@@ -22,11 +20,6 @@ func NewApp() *App {
 	config.Construct()
 	cfg := config.GetConfig()
 
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("failed to load env vars. Err: %s", err)
-	}
-
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=GMT",
 		cfg.DB.Host,
 		cfg.DB.User,
@@ -37,11 +30,11 @@ func NewApp() *App {
 	)
 	db, dbErr := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if dbErr != nil {
-		panic(fmt.Sprintf("failed to connect to DB; %s", err))
+		panic(fmt.Sprintf("failed to connect to DB; %s", dbErr))
 	}
 	migrateErr := db.AutoMigrate(&models.Drone{}, &models.Medication{})
 	if migrateErr != nil {
-		panic(fmt.Sprintf("failed to migrate; %s", err))
+		panic(fmt.Sprintf("failed to migrate; %s", migrateErr))
 	}
 
 	engine := gin.Default()
