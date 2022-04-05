@@ -23,12 +23,14 @@ func (r *RouteProvider) Boot() error {
 
 	pingHandler := handlers.NewPingHandler()
 	dronesHandler := handlers.NewDronesHandler(dronesAdapter, medicationsAdapter)
+	uploadsHandler := handlers.NewUploadsHandler()
 
 	rtr := &router.Router{
 		App: r.App,
 
-		PingHandler:   pingHandler,
-		DronesHandler: dronesHandler,
+		PingHandler:    pingHandler,
+		DronesHandler:  dronesHandler,
+		UploadsHandler: uploadsHandler,
 	}
 
 	rtr.RegisterAPIRoutes()

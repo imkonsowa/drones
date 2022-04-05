@@ -2,7 +2,6 @@ package app
 
 import (
 	"drones/app/data/models"
-	"drones/app/http/middlewares"
 	"drones/pkg/config"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -38,7 +37,6 @@ func NewApp() *App {
 	}
 
 	engine := gin.Default()
-	engine.Use(middlewares.JsonResponseHeader)
 
 	_ = engine.SetTrustedProxies([]string{})
 

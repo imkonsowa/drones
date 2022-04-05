@@ -24,7 +24,7 @@ func SaveImageFromBase64String(base64String string) (string, error) {
 
 	payload := strings.Index(base64String, ";base64,")
 	dec, err := base64.StdEncoding.DecodeString(base64String[payload+8:])
-	imageId := fmt.Sprintf("%s/%d_%d__%s", UploadsDirectoryPath, rand.Intn(100000000000), time.Now().Unix(), ext)
+	imagePath := fmt.Sprintf("%s/%d_%d__%s", UploadsDirectoryPath, rand.Intn(100000000000), time.Now().Unix(), ext)
 
 	r := bytes.NewReader(dec)
 
@@ -35,7 +35,7 @@ func SaveImageFromBase64String(base64String string) (string, error) {
 			return "", err
 		}
 
-		f, err := os.OpenFile(imageId, os.O_WRONLY|os.O_CREATE, 0777)
+		f, err := os.OpenFile(imagePath, os.O_WRONLY|os.O_CREATE, 0777)
 		if err != nil {
 			panic("Cannot open file")
 		}
@@ -50,7 +50,7 @@ func SaveImageFromBase64String(base64String string) (string, error) {
 			return "", err
 		}
 
-		f, err := os.OpenFile(imageId, os.O_WRONLY|os.O_CREATE, 0777)
+		f, err := os.OpenFile(imagePath, os.O_WRONLY|os.O_CREATE, 0777)
 		if err != nil {
 			return "", err
 		}
@@ -61,7 +61,7 @@ func SaveImageFromBase64String(base64String string) (string, error) {
 		}
 	}
 
-	return imageId, nil
+	return imagePath, nil
 }
 
 func validateAndParse(base64String string) (string, error) {
