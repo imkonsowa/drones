@@ -2,7 +2,7 @@
 <h3 align="center">Medications Delivery Using Drones - Golang Service </h3>
 </div>
 
-<details>
+<details open>
   <summary>Table of Contents</summary>
   <ol>
     <li>
