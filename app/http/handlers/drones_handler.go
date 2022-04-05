@@ -5,10 +5,13 @@ import (
 	"drones/app/data/models"
 	"drones/app/http/requests"
 	"drones/app/http/responses"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 )
+
+const MaxLoadingBatteryThreshold = 25
 
 type DronesHandler struct {
 	DronesAdapter      *adapters.DronesAdapter
@@ -52,6 +55,15 @@ func (d *DronesHandler) LoadMedications(context *gin.Context) {
 		responses.NewContextResponse(context).
 			Error().
 			Code(http.StatusInternalServerError).
+			Send()
+		return
+	}
+
+	if drone.BatteryCapacity < MaxLoadingBatteryThreshold {
+		responses.NewContextResponse(context).
+			Error().
+			Code(http.StatusUnprocessableEntity).
+			Message(fmt.Sprintf("can't load this drone with medications; Battery capacity: %d", drone.BatteryCapacity)).
 			Send()
 		return
 	}
