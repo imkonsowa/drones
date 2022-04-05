@@ -65,6 +65,11 @@ func SaveImageFromBase64String(base64String string) (string, error) {
 }
 
 func validateAndParse(base64String string) (string, error) {
+	baseIndex := strings.Index(base64String, ";base64,")
+	if baseIndex < 0 {
+		return "", errors.New("invalid base64 string")
+	}
+
 	mimePrefix := strings.Split(base64String, ";")
 	if len(mimePrefix) != 2 {
 		return "", errors.New("can't inspect image mime type")
