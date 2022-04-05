@@ -22,7 +22,7 @@ func (r *Router) RegisterAPIRoutes() *Router {
 	{
 		drones.POST("/register", r.inject(&requests.RegisterDrone{}), r.DronesHandler.Register)
 		drones.POST("/load", r.inject(&requests.LoadMedications{}), r.DronesHandler.LoadMedications)
-		// drones.PUT("/update-status", r.inject(&requests.UpdateDroneStatus{}), r.DronesHandler.UpdateStatus)
+		drones.PUT("/update-status", r.inject(&requests.UpdateDroneStatus{}), r.DronesHandler.UpdateStatus)
 		drones.GET("/:serialNumber/battery", r.DronesHandler.GetBatteryCapacity)
 		drones.GET("/idle", r.DronesHandler.GetIdleDrones)
 	}
