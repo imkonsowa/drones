@@ -42,7 +42,6 @@ func (d *DronesHandler) Register(context *gin.Context) {
 
 	responses.NewContextResponse(context).
 		Success().
-		Code(http.StatusOK).
 		Message("drone registered successfully").
 		Send()
 }
@@ -174,7 +173,6 @@ func (d *DronesHandler) LoadMedications(context *gin.Context) {
 
 	responses.NewContextResponse(context).
 		Success().
-		Code(http.StatusOK).
 		Message("medications loaded successfully").
 		Send()
 }
@@ -212,7 +210,6 @@ func (d *DronesHandler) UpdateStatus(context *gin.Context) {
 
 	responses.NewContextResponse(context).
 		Success().
-		Code(http.StatusOK).
 		Send()
 }
 
@@ -249,7 +246,6 @@ func (d *DronesHandler) GetBatteryCapacity(context *gin.Context) {
 
 	responses.NewContextResponse(context).
 		Success().
-		Code(http.StatusOK).
 		Data(map[string]interface{}{
 			"battery_capacity": drone.BatteryCapacity,
 		}).
@@ -268,9 +264,35 @@ func (d *DronesHandler) GetIdleDrones(context *gin.Context) {
 
 	responses.NewContextResponse(context).
 		Success().
-		Code(http.StatusOK).
 		Data(map[string]interface{}{
 			"drones": drones,
+		}).
+		Send()
+}
+
+func (d *DronesHandler) GetDroneLoadedMedications(context *gin.Context) {
+	serial := context.Param("serialNumber")
+	if len(serial) == 0 {
+		responses.NewContextResponse(context).
+			Error().
+			Code(http.StatusBadRequest).
+			Send()
+		return
+	}
+
+	medications, medicationsErr := d.MedicationsAdapter.GetDroneMedications(serial)
+	if medicationsErr != nil {
+		responses.NewContextResponse(context).
+			Error().
+			Code(http.StatusInternalServerError).
+			Send()
+		return
+	}
+
+	responses.NewContextResponse(context).
+		Success().
+		Data(gin.H{
+			"medications": medications,
 		}).
 		Send()
 }

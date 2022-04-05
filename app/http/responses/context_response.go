@@ -1,6 +1,9 @@
 package responses
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
 
 type contextResponse struct {
 	context *gin.Context
@@ -32,6 +35,9 @@ func (r *contextResponse) Error() *contextResponse {
 
 func (r *contextResponse) Success() *contextResponse {
 	r.success = false
+	if r.code == 0 {
+		r.code = http.StatusOK
+	}
 	return r
 }
 
