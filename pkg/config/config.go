@@ -36,12 +36,12 @@ func Construct() {
 				Name     string
 				SSlMode  string
 			}{
-				User:     env.String("DB_USER", "postgres"),
-				Password: env.String("DB_PASSWORD", "pass"),
-				Host:     env.String("DB_HOST", "localhost"),
-				Port:     env.String("DB_PORT", "5432"),
-				Name:     env.String("DB_NAME", "drones"),
-				SSlMode:  env.String("DB_SSL", "disable"),
+				User:     env.String("POSTGRES_USER", "postgres"),
+				Password: env.String("POSTGRES_PASSWORD", "pass"),
+				Host:     env.String("POSTGRES_HOST", "localhost"),
+				Port:     env.String("POSTGRES_PORT", "5432"),
+				Name:     env.String("POSTGRES_DB", "drones"),
+				SSlMode:  env.String("POSTGRES_SSL", "disable"),
 			},
 			Server: struct {
 				Host string

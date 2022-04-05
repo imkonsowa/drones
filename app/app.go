@@ -56,7 +56,7 @@ func (a *App) Run() {
 
 	cfg := config.GetConfig()
 
-	err := a.Engine.Run(fmt.Sprintf("%v:%v", cfg.Server.Host, cfg.Server.Port))
+	err := a.Engine.Run(fmt.Sprintf(":%v", cfg.Server.Port))
 	if err != nil {
 		return
 	}

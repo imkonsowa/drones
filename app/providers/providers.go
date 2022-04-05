@@ -1,6 +1,9 @@
 package providers
 
-import "drones/app"
+import (
+	"drones/app"
+	"fmt"
+)
 
 type Provider interface {
 	Boot() error
@@ -9,10 +12,10 @@ type Provider interface {
 func Ignite(a *app.App) {
 	err := NewRouteProvider(a).Boot()
 	if err != nil {
-		panic("failed to ignite route provider")
+		panic(fmt.Sprintf("failed to ignite route provider; Err: %v", err))
 	}
 	err = NewSchedulerProvider(a).Boot()
 	if err != nil {
-		panic("failed to ignite scheduler provider")
+		panic(fmt.Sprintf("failed to ignite scheduler provider; Err: %v", err))
 	}
 }

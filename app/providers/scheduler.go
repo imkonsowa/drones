@@ -40,7 +40,9 @@ func (s *SchedulerProvider) Boot() error {
 		return err
 	}
 
-	s.Cron.Run()
+	go func() {
+		s.Cron.Run()
+	}()
 
 	return nil
 }

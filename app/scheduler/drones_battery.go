@@ -29,7 +29,6 @@ func (d *DronesCronService) LogBatteryLevels(dronesLogsFilePath string) func() {
 		drones := d.DronesAdapter.DronesList()
 
 		for _, drone := range drones {
-			fmt.Println("processing drone", drone.ID)
 			logRecord += fmt.Sprintf("-> DroneID: %d - Battery Level: %d\n", drone.ID, drone.BatteryCapacity)
 		}
 
