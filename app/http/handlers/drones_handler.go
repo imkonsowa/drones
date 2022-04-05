@@ -5,6 +5,7 @@ import (
 	"drones/app/data/models"
 	"drones/app/http/requests"
 	"drones/app/http/responses"
+	"drones/pkg/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -78,6 +79,21 @@ func (d *DronesHandler) LoadMedications(context *gin.Context) {
 			Name:              medication.Name,
 			Code:              medication.Code,
 			Weight:            medication.Weight,
+		}
+
+		// save base64 picture if sent
+		if len(medication.ImageBase64) > 0 {
+			imagePath, err := utils.SaveImageFromBase64String(medication.ImageBase64)
+			if err != nil {
+				responses.NewContextResponse(context).
+					Error().
+					Code(http.StatusUnprocessableEntity).
+					Message(fmt.Sprintf("failed to save medication image; Code: %s; Err: %v", medication.Code, err)).
+					Send()
+				return
+			}
+
+			m.ImageURL = imagePath
 		}
 
 		medications = append(medications, m)

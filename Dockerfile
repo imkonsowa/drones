@@ -11,4 +11,5 @@ FROM alpine
 COPY --from=build_drones /drones/drones /drones/drones
 WORKDIR /drones
 RUN mkdir -p storage/logs
+RUN mkdir -p storage/uploads
 CMD ["./drones"]
