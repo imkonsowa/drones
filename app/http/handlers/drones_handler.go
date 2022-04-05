@@ -167,6 +167,24 @@ func (d *DronesHandler) UpdateStatus(context *gin.Context) {
 	ctxKey, _ := context.Get("request")
 	request := ctxKey.(*requests.UpdateDroneStatus)
 
+	drone, droneErr := d.DronesAdapter.GetBySerialNumber(request.SerialNumber)
+	if droneErr != nil {
+		responses.NewContextResponse(context).
+			Error().
+			Code(http.StatusInternalServerError).
+			Send()
+		return
+	}
+
+	if request.Status == models.Loading && drone.BatteryCapacity < MaxLoadingBatteryThreshold {
+		responses.NewContextResponse(context).
+			Error().
+			Code(http.StatusUnprocessableEntity).
+			Message(fmt.Sprintf("can't update satus to LOADING; Battery capacity: %d", drone.BatteryCapacity)).
+			Send()
+		return
+	}
+
 	err := d.DronesAdapter.UpdateStatus(request.SerialNumber, request.Status)
 	if err != nil {
 		responses.NewContextResponse(context).
