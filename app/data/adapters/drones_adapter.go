@@ -34,7 +34,7 @@ func (d *DronesAdapter) GetBySerialNumber(serial string) (*models.Drone, error) 
 
 	var drone models.Drone
 
-	err := d.DB.First(&drone).Error
+	err := d.DB.Where("serial_number = ?", serial).First(&drone).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, nil
 	}
