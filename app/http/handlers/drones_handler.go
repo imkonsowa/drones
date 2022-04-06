@@ -227,12 +227,11 @@ func (d *DronesHandler) GetBatteryCapacity(context *gin.Context) {
 	}
 
 	drone, err := d.DronesAdapter.GetBySerialNumber(serial)
-	if err != nil {
-		log.Print(err)
+	if err != nil || drone == nil {
 		responses.NewContextResponse(context).
 			Error().
-			Code(http.StatusInternalServerError).
-			Message("failed to resolve drone").
+			Code(http.StatusNotFound).
+			Message("not registered drone").
 			Send()
 		return
 	}
@@ -276,6 +275,16 @@ func (d *DronesHandler) GetDroneLoadedMedications(context *gin.Context) {
 		responses.NewContextResponse(context).
 			Error().
 			Code(http.StatusBadRequest).
+			Send()
+		return
+	}
+
+	drone, droneErr := d.DronesAdapter.GetBySerialNumber(serial)
+	if droneErr != nil || drone == nil {
+		responses.NewContextResponse(context).
+			Error().
+			Code(http.StatusNotFound).
+			Message("not registered drone").
 			Send()
 		return
 	}
