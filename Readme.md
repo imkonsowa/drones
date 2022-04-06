@@ -31,6 +31,7 @@
         <li><a href="#update-drone-status">Update Drone Status</a></li>
       </ul>
     </li>
+    <li><a href="#possible-enhancements">Possible Enhancements</a></li>
   </ol>
 </details>
 
@@ -430,3 +431,12 @@ Used to update drone status, one of: ('IDLE' 'LOADING' 'LOADED' 'DELIVERED' 'RET
     "success": false
 }
 ```
+
+### Possible Enhancements
+
+Below list states app possible enhancements I couldn't mount more time to implement.
+
+- Return errors with keys json tags instead of struct keys.
+- Enhance layers abstractions by implementing interfaces to support replacing app components easily.
+- Add unit & integration tests
+- Deploy and online demo.
