@@ -83,9 +83,7 @@ This section documents how to consume this service APIs, listed below all reques
 
 ### Postman Collection
 
-The URL below contains all endpoints requests collection on postman
-
-`https://www.getpostman.com/collections/0f4b66ade48ff3ed3b8c`
+The URL below contains all endpoints requests collection on postman: [here](https://www.getpostman.com/collections/0f4b66ade48ff3ed3b8c)
 
 ### Register Drone
 
