@@ -27,6 +27,8 @@
         <li><a href="#register-drone">Register Drone</a></li>
         <li><a href="#load-drone-with-medications">Load Drone With Medications</a></li>
         <li><a href="#get-drone-medications">Get Drone Medications</a></li>
+        <li><a href="#get-drone-battery-capacity">Get Drone Battery Capacity</a></li>
+        <li><a href="#update-drone-status">Update Drone Status</a></li>
       </ul>
     </li>
   </ol>
