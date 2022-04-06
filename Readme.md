@@ -439,4 +439,4 @@ Below list states app possible enhancements I couldn't mount more time to implem
 - Return errors with keys json tags instead of struct keys.
 - Enhance layers abstractions by implementing interfaces to support replacing app components easily.
 - Add unit & integration tests
-- Deploy and online demo.
+- Deploy an online demo.
