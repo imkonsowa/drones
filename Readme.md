@@ -15,7 +15,7 @@
       <a href="#database">Database</a>
     </li>
     <li>
-      <a href="#setup-and-run">Setup and Run</a>
+      <a href="#setup">Setup</a>
       <ul>
         <li><a href="#ping">Ping</a></li>
       </ul>
