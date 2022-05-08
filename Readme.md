@@ -37,7 +37,7 @@
 
 ## About
 
-This service is built using the latest golang version `1.18` as a hiring task for musala soft company.
+This service is built using the latest golang version `1.18`.
 
 ## Dependencies
 
