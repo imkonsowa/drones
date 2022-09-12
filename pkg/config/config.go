@@ -1,8 +1,9 @@
 package config
 
 import (
-	"drones/pkg/env"
 	"sync"
+
+	"drones/pkg/env"
 )
 
 var (
@@ -18,6 +19,7 @@ type Config struct {
 		Port     string
 		Name     string
 		SSlMode  string
+		SSlCert  string
 	}
 	Server struct {
 		Host string
@@ -35,6 +37,7 @@ func Construct() {
 				Port     string
 				Name     string
 				SSlMode  string
+				SSlCert  string
 			}{
 				User:     env.String("POSTGRES_USER", "postgres"),
 				Password: env.String("POSTGRES_PASSWORD", "pass"),
@@ -42,6 +45,7 @@ func Construct() {
 				Port:     env.String("POSTGRES_PORT", "5432"),
 				Name:     env.String("POSTGRES_DB", "drones"),
 				SSlMode:  env.String("POSTGRES_SSL", "disable"),
+				SSlCert:  env.String("POSTGRES_CERT", ""),
 			},
 			Server: struct {
 				Host string

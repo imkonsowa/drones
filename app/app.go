@@ -1,12 +1,14 @@
 package app
 
 import (
-	"drones/app/data/models"
-	"drones/pkg/config"
 	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+
+	"drones/app/data/models"
+	"drones/pkg/config"
 )
 
 type App struct {
